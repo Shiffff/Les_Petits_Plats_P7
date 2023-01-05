@@ -1,7 +1,65 @@
 html{
-    background-color: rgb(0, 0, 0);
+  margin: 40px;
 }
+header{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 
-h1{
-    color: azure;
 }
+.logo{
+  width: 200px;
+}
+@media (min-width: 800px) {
+  .logo{
+    width: 400px;
+    }
+
+    form{
+      display: flex;
+    }
+  }
+  
+  .rounded{
+    background-color: lightgray;
+    border: 0px;
+    
+  }
+  #search-addon{
+    background-color: lightgray;
+    cursor: pointer;
+    
+  }
+  .form-control{
+    padding: 0.575rem 0.75rem;
+
+  }
+
+  .rounded::placeholder{
+    color: #ADADAD;
+    
+  }
+  .form-control:focus {
+    box-shadow: 0 0 0 0.1rem #D0504F;
+    border-radius: 0px 0px 0px 0px;
+  }
+
+
+    .filters-1,
+    .filters-2,
+    .filters-3 {
+    display: none;
+    }
+
+    .filters-1, .btnFilters-1, .inputFilters-1{
+      background-color: #3282F7;
+    }
+
+    .filters-2, .btnFilters-2, .inputFilters-2{
+      background-color: #68D9A4;
+      
+    }
+    .filters-3, .btnFilters-3, .inputFilters-3{
+      background-color: #ED6454;
+
+    }
