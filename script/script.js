@@ -1,39 +1,115 @@
 document.querySelectorAll(".filterContainer button").forEach((button) => {
   button.addEventListener("click", (event) => {
     event.preventDefault();
-    let targetEl = event.target;
-    if (targetEl.tagName === "BUTTON") {
-      const inputEl = targetEl.querySelector("input");
-      inputEl.placeholder =
-        "Rechercher un " + inputEl.placeholder.toLowerCase();
-      targetEl = targetEl.nextElementSibling;
-    } else if (targetEl.tagName === "INPUT") {
-      targetEl.placeholder =
-        "Rechercher un " + targetEl.placeholder.toLowerCase();
-      targetEl = targetEl.parentElement.nextElementSibling;
-    } else if (targetEl.tagName === "IMG") {
-      targetEl.parentElement.querySelector("input").placeholder =
-        "Rechercher un " +
-        targetEl.parentElement.querySelector("input").placeholder.toLowerCase();
-      targetEl = targetEl.parentElement.nextElementSibling;
-    }
-
-    if (targetEl.style.display === "block") {
-      let targetElPlaceholder =
-        targetEl.parentNode.querySelector("input").placeholder;
-      let arrayPlaceholder = targetElPlaceholder.match(/\b\w+\b$/);
-      let lastWord = arrayPlaceholder[0];
-      targetEl.parentNode.querySelector("input").placeholder = lastWord;
-      targetEl.style.display = "none";
-    } else {
-      const ulElements = document.querySelectorAll("ul");
-      ulElements.forEach((ul) => {
-        if (ul.style.display === "block") {
-          ul.style.display = "none";
-          console.log(ul);
-        }
-      });
-      targetEl.style.display = "block";
-    }
+    openCloseFilter(event.target);
+    changeStyle(event.target);
   });
 });
+
+const changeStyle = (e) => {
+  let parentDiv = e;
+  while (parentDiv.tagName !== "DIV") {
+    parentDiv = parentDiv.parentNode;
+  }
+  console.log(parentDiv);
+};
+
+const openCloseFilter = (event) => {
+  let parentDiv = event;
+  if (parentDiv.tagName === "BUTTON") {
+    parentDiv = parentDiv.parentNode;
+    openFilter(parentDiv);
+  } else if (parentDiv.tagName === "INPUT") {
+    parentDiv = parentDiv.parentNode.parentNode;
+    openFilter(parentDiv);
+  } else if (parentDiv.tagName === "IMG") {
+    parentDiv = parentDiv.parentNode.parentNode;
+    openFilterByArrow(parentDiv);
+  }
+};
+
+const checkOpenFilter = () => {
+  const ulElements = document.querySelectorAll("ul");
+  ulElements.forEach((ul) => {
+    if (ul.style.display === "block") {
+      const newPlaceHolder = closePlaceholder(
+        ul.parentNode.querySelector("input").placeholder
+      );
+      ul.parentNode.querySelector("IMG").style.transform = "rotate(0deg)";
+
+      ul.parentNode.querySelector("input").placeholder = newPlaceHolder;
+
+      ul.style.display = "none";
+    }
+  });
+};
+
+const openPlaceholder = (placeHolder) => {
+  if (placeHolder == "Ingredients") {
+    return "Rechercher un ingredient";
+  } else if (placeHolder == "Appareils") {
+    return "Rechercher un appareil";
+  } else if (placeHolder == "Ustensiles") {
+    return "Rechercher un ustensile";
+  }
+};
+
+const closePlaceholder = (placeHolder) => {
+  if (placeHolder == "Rechercher un ingredient") {
+    return "Ingredients";
+  } else if (placeHolder == "Rechercher un appareil") {
+    return "Appareils";
+  } else if (placeHolder == "Rechercher un ustensile") {
+    return "Ustensiles";
+  }
+};
+const closeOnClique = () => {
+  window.addEventListener("click", function (event) {
+    const form = document.querySelector("form");
+    if (!form.contains(event.target)) {
+      checkOpenFilter();
+    }
+  });
+};
+closeOnClique();
+
+// Remonte a l'élément DIV selon l'élément cliqué
+const openFilter = (parentDiv) => {
+  const filterList = parentDiv.querySelector("ul");
+  let placeholder = parentDiv.querySelector("input").placeholder;
+
+  if (filterList.style.display === "block") {
+  } else {
+    checkOpenFilter();
+    // Vérifie si l'un des éléments est ouvert si oui le ferme
+
+    filterList.style.display = "block";
+    const newPlaceHolder = openPlaceholder(placeholder);
+    parentDiv.querySelector("input").placeholder = newPlaceHolder;
+    parentDiv.querySelector("IMG").style.transform = "rotate(180deg)";
+    // ouvre le bon élément
+  }
+};
+
+const openFilterByArrow = (parentDiv) => {
+  const filterList = parentDiv.querySelector("ul");
+  let placeholder = parentDiv.querySelector("input").placeholder;
+
+  if (filterList.style.display === "block") {
+    filterList.style.display = "none";
+    const newPlaceHolder = closePlaceholder(
+      parentDiv.querySelector("INPUT").placeholder
+    );
+    parentDiv.querySelector("INPUT").placeholder = newPlaceHolder;
+    parentDiv.querySelector("img").style.transform = "rotate(0deg)";
+  } else {
+    checkOpenFilter();
+    // Vérifie si l'un des éléments est ouvert si oui le ferme
+
+    filterList.style.display = "block";
+    const newPlaceHolder = openPlaceholder(placeholder);
+    parentDiv.querySelector("input").placeholder = newPlaceHolder;
+    parentDiv.querySelector("IMG").style.transform = "rotate(180deg)";
+    // ouvre le bon élément
+  }
+};

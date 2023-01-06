@@ -1,5 +1,5 @@
 html{
-  margin: 40px;
+  margin: 30px 100px 0px 100px;
 }
 header{
     display: flex;
@@ -15,9 +15,7 @@ header{
     width: 400px;
     }
 
-    form{
-      display: flex;
-    }
+
   }
   
   .rounded{
@@ -48,11 +46,17 @@ header{
     .filters-1,
     .filters-2,
     .filters-3 {
-    display: none;
+    display: none;  
+
+
+ 
+
     }
+
 
     .filters-1, .btnFilters-1, .inputFilters-1{
       background-color: #3282F7;
+
     }
 
     .filters-2, .btnFilters-2, .inputFilters-2{
@@ -61,5 +65,111 @@ header{
     }
     .filters-3, .btnFilters-3, .inputFilters-3{
       background-color: #ED6454;
+    }
+
+    .filterContainer input{
+      border: none;
+      outline: none;
 
     }
+
+    .filterContainer button{
+      border: none;
+
+
+    }
+
+    .filterContainer input::placeholder{
+      color: white;
+
+    }
+
+    .filterContainer{
+
+      display: flex;
+      justify-content: center;
+    }
+    .activeFilter li{
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 30px;
+      color: white;
+
+    }
+    .activeFilter p{
+      margin: 0px;
+      padding: 0px;
+    }
+    .activeFilter img{
+      width: 20px;
+      height: 20px;
+    }
+
+    .activeFilter{
+    margin-top: 20px;}
+
+    .blue{
+      background-color: #3282F7;
+    }
+    .green{
+      background-color: #68D9A4;
+    }
+    .red{
+      background-color: #D0504F;
+    }
+
+
+    .filters-1,
+    .filters-2,
+    .filters-3 {
+    display: none;  
+    column-count: 3;
+
+ 
+
+    }
+
+    .filters-1,
+    .filters-2,
+    .filters-3 li {
+    list-style: none;
+
+    }
+    .activeFilter ul {
+    list-style: none;
+      padding: 0;
+      margin: 0;
+      margin-bottom: 20px;
+    }
+    .filter1 button, .filter2 button, .filter3 button  {
+      height: 60px;
+      border-radius: 5px;
+      width: 143px;
+    }
+    .filter1 input, .filter2 input, .filter3 input  {
+      height: 20px;
+      border-radius: 5px;
+      width: 100px;
+    }
+
+
+
+    @media (min-width: 800px) {
+      .logo{
+        width: 400px;
+        }
+        form{
+          gap:20px;
+          display: flex;
+          justify-content: flex-start;
+    
+        }
+        .filterContainer{
+          display: flex;
+          justify-content: flex-start;
+        }
+    
+      }
