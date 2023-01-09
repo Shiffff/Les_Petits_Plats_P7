@@ -1,4 +1,50 @@
 document.querySelectorAll(".filterContainer button").forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.preventDefault();
+    const parentDiv = button.parentNode.parentNode;
+    checkOtherFilter();
+    openFilter(parentDiv);
+  });
+});
+document.querySelectorAll(".filtersOpen img").forEach((arrow) => {
+  arrow.addEventListener("click", (e) => {
+    e.preventDefault();
+    checkOtherFilter();
+  });
+});
+const openFilter = (parentDiv) => {
+  parentDiv.querySelector(".filtersClose").style.display = "none";
+  parentDiv.querySelector(".filtersOpen").style.display = "block";
+};
+const checkOtherFilter = () => {
+  const filterEl = document.querySelectorAll(".filtersOpen");
+  filterEl.forEach((el) => {
+    if (el.style.display === "block") {
+      el.style.display = "none";
+      el.parentNode.querySelector(".filtersClose").style.display = "block";
+    }
+  });
+};
+const closeFilter = () => {
+  window.addEventListener("click", function (event) {
+    const filterEl = document.querySelectorAll(".filtersOpen");
+    filterEl.forEach((el) => {
+      if (el.style.display === "block") {
+        const parentEl = el.parentNode;
+        if (!parentEl.contains(event.target)) {
+          checkOtherFilter();
+        }
+      }
+    });
+  });
+};
+closeFilter();
+
+/*
+
+
+
+document.querySelectorAll(".filterContainer button").forEach((button) => {
   button.addEventListener("click", (event) => {
     event.preventDefault();
     openCloseFilter(event.target);
@@ -11,7 +57,6 @@ const changeStyle = (e) => {
   while (parentDiv.tagName !== "DIV") {
     parentDiv = parentDiv.parentNode;
   }
-  console.log(parentDiv);
 };
 
 const openCloseFilter = (event) => {
@@ -65,10 +110,15 @@ const closePlaceholder = (placeHolder) => {
 };
 const closeOnClique = () => {
   window.addEventListener("click", function (event) {
-    const form = document.querySelector("form");
-    if (!form.contains(event.target)) {
-      checkOpenFilter();
-    }
+    const ulElements = document.querySelectorAll("ul");
+    ulElements.forEach((ul) => {
+      if (ul.style.display === "block") {
+        const form = ul.parentNode;
+        if (!form.contains(event.target)) {
+          checkOpenFilter();
+        }
+      }
+    });
   });
 };
 closeOnClique();
@@ -113,3 +163,15 @@ const openFilterByArrow = (parentDiv) => {
     // ouvre le bon élément
   }
 };
+
+/*
+const closeOnClique = () => {
+  window.addEventListener("click", function (event) {
+    const form = document.querySelector("form");
+    if (!form.contains(event.target)) {
+      checkOpenFilter();
+    }
+  });
+};
+closeOnClique();
+*/

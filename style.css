@@ -1,5 +1,12 @@
 html{
-  margin: 30px 100px 0px 100px;
+  margin: 30px 40px 0px 40px;
+  min-width: 150px;
+}
+@media (min-width: 800px) {
+  html{
+    margin: 30px 100px 0px 100px;
+
+  }
 }
 header{
     display: flex;
@@ -10,6 +17,7 @@ header{
 .logo{
   width: 200px;
 }
+
 @media (min-width: 800px) {
   .logo{
     width: 400px;
@@ -17,19 +25,34 @@ header{
 
 
   }
-  
-  .rounded{
+  .form-control{
     background-color: lightgray;
+  }
+
+
+
+  .rounded{
     border: 0px;
+    position: relative;
     
   }
-  #search-addon{
-    background-color: lightgray;
+  .rounded i{
+    position: absolute;
+    right: 10px;
+    top: 18px;
+    z-index: 10;
     cursor: pointer;
     
   }
+
+  #search-addon{
+    background-color: lightgray;
+    cursor: pointer;
+  }
+  
   .form-control{
     padding: 0.575rem 0.75rem;
+    height: 50px;
 
   }
 
@@ -41,58 +64,10 @@ header{
     box-shadow: 0 0 0 0.1rem #D0504F;
     border-radius: 0px 0px 0px 0px;
   }
-
-
-    .filters-1,
-    .filters-2,
-    .filters-3 {
-    display: none;  
-
-
- 
-
-    }
-
-
-    .filters-1, .btnFilters-1, .inputFilters-1{
-      background-color: #3282F7;
-
-    }
-
-    .filters-2, .btnFilters-2, .inputFilters-2{
-      background-color: #68D9A4;
-      
-    }
-    .filters-3, .btnFilters-3, .inputFilters-3{
-      background-color: #ED6454;
-    }
-
-    .filterContainer input{
-      border: none;
-      outline: none;
-
-    }
-
-    .filterContainer button{
-      border: none;
-
-
-    }
-
-    .filterContainer input::placeholder{
-      color: white;
-
-    }
-
-    .filterContainer{
-
-      display: flex;
-      justify-content: center;
-    }
     .activeFilter li{
       border-radius: 5px;
       display: flex;
-      justify-content: center;
+      justify-content: space-evenly;
       align-items: center;
       width: 80px;
       height: 30px;
@@ -109,7 +84,141 @@ header{
     }
 
     .activeFilter{
-    margin-top: 20px;}
+    margin-top: 20px;
+  }
+
+  .activeFilter ul{
+    padding: 0;
+    font-size: 13px;
+  }
+
+  .filtersClose{
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .filterContainer button{
+    width: 100%;
+   border: none;
+   height: 45px;
+   color: white;
+   font-size: 15px;
+   font-weight: 500;
+   position: relative;
+  }
+
+  @media (min-width: 800px) {
+    .filterContainer button{
+      width: 110px;
+      height: 50px;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+  
+    }
+      }
+
+
+  .filterContainer img{
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    right: 20px;
+    top: 18px;
+   }
+
+@media (min-width: 800px) {
+  .filterContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+
+  }
+    }
+    @media (min-width: 800px) {
+      .filterContainer button{
+        display: flex;
+        align-items: center; 
+        font-size: 12px;
+        font-weight: 500;
+        padding-left: 12px;
+     
+
+
+      }
+      .filterContainer img{
+          right: 10px;
+      }
+        }
+        
+
+
+        /* **********************************************/
+        .filtersOpen {
+          border-radius: 3px;
+          position: relative;
+
+        }
+        .filtersOpen ul {
+          column-count: 3;
+          color: white;
+          list-style: none;
+          padding: 0;
+          margin-left: 15px;
+          font-size: 13px;
+          font-weight: 400;
+          padding-bottom: 12px;
+          padding-right: 15px;
+
+        }
+        .filtersOpen input {
+          border: none;
+          outline: none;
+          margin-bottom: 10px;
+          margin-top: 15px;
+          margin-left: 12px;
+          font-size: 13px;
+          color: white;
+
+        }
+        .filtersOpen img{
+          position: absolute;
+          right: 10px;
+          cursor: pointer;
+        }
+
+
+        @media (min-width: 800px) {
+          .filtersOpen ul {
+            column-gap: 16px;
+        
+          }
+            }
+
+        .blue input{
+          background-color: #3282F7;
+
+        }
+        .green input{
+          background-color: #68D9A4;
+
+        }
+        .red input{
+          background-color: #D0504F;
+
+        }
+
+        .blue input::placeholder {
+          color: #98C0FB;
+        }
+        .green input::placeholder {
+          color: #e2e7e5;
+        }
+        .red input::placeholder {
+          color: #dda8a8;
+        }
 
     .blue{
       background-color: #3282F7;
@@ -122,54 +231,85 @@ header{
     }
 
 
-    .filters-1,
-    .filters-2,
-    .filters-3 {
-    display: none;  
-    column-count: 3;
 
- 
 
-    }
+    /********************************************************** */
+  
 
-    .filters-1,
-    .filters-2,
-    .filters-3 li {
-    list-style: none;
+
+    .cardOne{
+      margin-bottom: 40px;
+      width: 100%;
+      height: 300px;
+      background-color: lightgray;
 
     }
-    .activeFilter ul {
-    list-style: none;
-      padding: 0;
-      margin: 0;
-      margin-bottom: 20px;
-    }
-    .filter1 button, .filter2 button, .filter3 button  {
-      height: 60px;
-      border-radius: 5px;
-      width: 143px;
-    }
-    .filter1 input, .filter2 input, .filter3 input  {
-      height: 20px;
-      border-radius: 5px;
-      width: 100px;
-    }
+
+.recipeContainer{
+  margin-top: 50px;
+}
+.bgimg{
+  width: 100%;
+  height: 50%;
+  background-color: gray  ;
+}
 
 
 
-    @media (min-width: 800px) {
-      .logo{
-        width: 400px;
-        }
-        form{
-          gap:20px;
-          display: flex;
-          justify-content: flex-start;
-    
-        }
-        .filterContainer{
-          display: flex;
-          justify-content: flex-start;
-        }
-    
-      }
+.cardBottomTop {
+  display: flex;
+  justify-content: space-between;
+  padding: 17px 17px 0px 17px ;
+
+
+}
+.cardBottomTop h2{
+  font-size: 14px
+}
+
+.timecontainer{
+  display: flex;
+  align-items: flex-start;
+  font-size: 14px
+
+}
+
+.cardBottomBack{
+  display: flex;
+  justify-content: space-between;
+}
+.ingredientList{
+  font-size: 8px;
+}
+.ingredientList ul {
+  list-style: none;
+}
+
+.descriptionCard{
+  font-size: 8px;
+  width: 50%;
+}
+
+@media (min-width: 1000px) {
+    .recipeContainer{
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      gap: 25px ;
+      flex-wrap: wrap;
+    }
+    .cardOne{
+      width: 40%;
+
+
+    }
+    }
+
+
+@media (min-width: 1200px) {
+  .cardOne{
+    width: 30%;
+
+
+  }
+  }
