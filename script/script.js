@@ -40,7 +40,62 @@ const closeFilter = () => {
 };
 closeFilter();
 
-console.log(recipes);
 recipes.forEach((recipe) => {
   recipeFactory(recipe);
 });
+
+let filterRecipes = recipes;
+let newRecipesList;
+
+const mainSearchListener = () => {
+  const mainSearch = document.querySelector(".rounded input");
+  mainSearch.addEventListener("input", (e) => {
+    if (mainSearch.value.length > 2) {
+      newRecipesList = sortMedia(filterRecipes, mainSearch.value, "mainSearch");
+      const recipeContainer = document.querySelector(".recipeContainer");
+      recipeContainer.innerText = "";
+      newRecipesList.forEach((recipe) => {
+        recipeFactory(recipe);
+      });
+      sortData(newRecipesList);
+    } else {
+      recipeContainer.innerText = "";
+      filterRecipes.forEach((recipe) => {
+        recipeFactory(recipe);
+      });
+      sortData(filterRecipes);
+    }
+  });
+};
+mainSearchListener();
+
+const ingredientsListener = () => {
+  document.querySelectorAll(".ingrediantContainer li").forEach((ingredient) => {
+    ingredient.addEventListener("click", (e) => {
+      newRecipesList = sortMedia(
+        filterRecipes,
+        e.target.textContent,
+        "ingrediantSearch"
+      );
+    });
+  });
+};
+ingredientsListener();
+
+const appareilsListener = () => {
+  document.querySelectorAll(".appareilsContainer li").forEach((appareil) => {
+    appareil.addEventListener("click", (e) => {
+      console.log(e.target);
+    });
+  });
+};
+appareilsListener();
+
+const ustensileListener = () => {
+  document.querySelectorAll(".ustensilesContainer li").forEach((ustensile) => {
+    ustensile.addEventListener("click", (e) => {
+      console.log(e.target);
+    });
+  });
+};
+ustensileListener();

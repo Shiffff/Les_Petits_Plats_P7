@@ -60,10 +60,3 @@ const recipeFactory = (recipe) => {
   cardOne.appendChild(bgimg);
   cardOne.appendChild(cardBottom);
 };
-
-// ulList.appendChild(ingredientLi);
-/*  recipe.ingredients.forEach((ingredient) => {
-    const ingredientLi = document.createElement("li");
-    ingredientLi.innerText = ingredient;
-  });
-*/
