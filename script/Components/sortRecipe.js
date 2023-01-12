@@ -5,15 +5,19 @@ class Recette {
     return field === "mainSearch";
   }
   static order(filterRecipes, value) {
-    return filterRecipes.filter((recipe) => {
-      return (
+    let result = [];
+    filterRecipes.forEach((recipe) => {
+      if (
         recipe.name.toLowerCase().includes(value.toLowerCase()) ||
         recipe.ingredients.some((ingredient) =>
           ingredient.ingredient.toLowerCase().includes(value.toLowerCase())
         ) ||
         recipe.description.toLowerCase().includes(value.toLowerCase())
-      );
+      ) {
+        result.push(recipe);
+      }
     });
+    return result;
   }
 }
 
@@ -22,20 +26,19 @@ class Ingredient {
     return field === "ingrediantSearch";
   }
   static order(filterRecipes, value) {
-    let found = false;
-    filterArray.forEach((ingredient) => {
-      if (ingredient == value) {
-        filterArray = filterArray.filter((ingredient) => ingredient != value);
-        found = true;
+    let newRecipes = [];
+    filterRecipes.forEach((recipe) => {
+      if (
+        recipe.name.toLowerCase().includes(value.toLowerCase()) ||
+        recipe.ingredients.some((ingredient) =>
+          ingredient.ingredient.toLowerCase().includes(value.toLowerCase())
+        ) ||
+        recipe.description.toLowerCase().includes(value.toLowerCase())
+      ) {
+        newRecipes.push(recipe);
       }
     });
-    if (!found) {
-      filterArray.push(value);
-    }
-    console.log(filterArray);
-    filterArray.forEach((ingredient) => {
-      console.log(ingredient);
-    });
+    return newRecipes;
   }
 }
 

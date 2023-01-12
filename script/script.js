@@ -40,48 +40,72 @@ const closeFilter = () => {
 };
 closeFilter();
 
+let filterRecipes = copyArray(recipes);
+
 recipes.forEach((recipe) => {
   recipeFactory(recipe);
 });
 
-let filterRecipes = recipes;
-let newRecipesList;
-
 const mainSearchListener = () => {
   const mainSearch = document.querySelector(".rounded input");
   mainSearch.addEventListener("input", (e) => {
+    filterRecipes = copyArray(recipes);
     if (mainSearch.value.length > 2) {
-      newRecipesList = sortMedia(filterRecipes, mainSearch.value, "mainSearch");
+      filterRecipes = sortMedia(filterRecipes, mainSearch.value, "mainSearch");
       const recipeContainer = document.querySelector(".recipeContainer");
-      recipeContainer.innerText = "";
-      newRecipesList.forEach((recipe) => {
-        recipeFactory(recipe);
-      });
-      sortData(newRecipesList);
-    } else {
       recipeContainer.innerText = "";
       filterRecipes.forEach((recipe) => {
         recipeFactory(recipe);
       });
       sortData(filterRecipes);
+    } else {
+      recipeContainer.innerText = "";
+      recipes.forEach((recipe) => {
+        recipeFactory(recipe);
+      });
+      sortData(recipes);
     }
   });
 };
 mainSearchListener();
 
 const ingredientsListener = () => {
+  let filterActiveArray = [];
   document.querySelectorAll(".ingrediantContainer li").forEach((ingredient) => {
     ingredient.addEventListener("click", (e) => {
-      newRecipesList = sortMedia(
-        filterRecipes,
-        e.target.textContent,
-        "ingrediantSearch"
-      );
+      const recipeContainer = document.querySelector(".recipeContainer ");
+      recipeContainer.innerText = "";
+      cliquedFilter = e.target.textContent;
+      let found = false;
+      filterActiveArray.forEach((ingredient) => {
+        if (ingredient == cliquedFilter) {
+          filterActiveArray = filterActiveArray.filter(
+            (ingredient) => ingredient != cliquedFilter
+          );
+          found = true;
+          filterActiveArray.forEach((eachFilter) => {
+            filterRecipes = sortMedia(recipes, eachFilter, "ingrediantSearch");
+          });
+        }
+      });
+      if (!found) {
+        filterActiveArray.push(cliquedFilter);
+        filterActiveArray.forEach((eachFilter) => {
+          filterRecipes = sortMedia(
+            filterRecipes,
+            eachFilter,
+            "ingrediantSearch"
+          );
+        });
+      }
+
+      console.log(filterRecipes);
     });
   });
 };
 ingredientsListener();
 
+/*
 const appareilsListener = () => {
   document.querySelectorAll(".appareilsContainer li").forEach((appareil) => {
     appareil.addEventListener("click", (e) => {
@@ -99,3 +123,11 @@ const ustensileListener = () => {
   });
 };
 ustensileListener();
+
+/*    ingredient.addEventListener("click", (e) => {
+      newRecipesList = sortMedia(
+        filterRecipes,
+        e.target.textContent,
+        "ingrediantSearch"
+      );
+    });*/

@@ -19,3 +19,7 @@ const sortData = (recipes) => {
   ustensilFactory(uniqueUstensilArray);
 };
 sortData(recipes);
+
+const copyArray = (originalArray) => {
+  return JSON.parse(JSON.stringify(originalArray));
+};

@@ -134,7 +134,13 @@ header{
     display: flex;
     flex-direction: row;
     gap: 15px;
+    
 
+  }
+  .filterContainerRelative{
+    display: flex;
+    position: absolute;
+    gap: 20px;
   }
     }
     @media (min-width: 800px) {
@@ -162,7 +168,8 @@ header{
 
         }
         .filtersOpen ul {
-          column-count: 3;
+          display: grid;
+          grid-template-columns: repeat(3,1fr);
           color: white;
           list-style: none;
           padding: 0;
@@ -171,7 +178,27 @@ header{
           font-weight: 400;
           padding-bottom: 12px;
           padding-right: 15px;
+          max-height: 400px;
+          overflow-y: scroll;
+        }
+        .filtersOpen ul::-webkit-scrollbar {
+          width: 0.5em;
+          background-color: #F5F5F5;
+        }
+        
+        /* Curseur de la barre de défilement */
+        .filtersOpen ul::-webkit-scrollbar-thumb {
+          background-color: lightgray;
+          border-radius: 10px;
+        }
+        
+        /* Curseur de la barre de défilement lorsqu'il est activé */
+        .filtersOpen ul::-webkit-scrollbar-thumb:hover {
+          background-color: #555;
+        }
 
+        .filtersOpen li {
+          word-wrap: none;
         }
         .filtersOpen input {
           border: none;
@@ -242,12 +269,11 @@ header{
       width: 100%;
       height: 300px;
       background-color: lightgray;
-      overflow: hidden;
 
     }
 
 .recipeContainer{
-  margin-top: 50px;
+  margin-top: 100px;
 }
 .bgimg{
   width: 100%;
@@ -275,6 +301,11 @@ header{
 
 }
 
+.timecontainer p{
+  margin: 0;
+  padding: 0;
+
+}
 .cardBottomBack{
   display: flex;
   justify-content: space-between;
@@ -314,3 +345,22 @@ header{
 
   }
   }
+
+ .descriptionCard p{
+  max-height: 75px;
+  overflow: hidden;
+  font-size: 9px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+
+  
+ }
+
+ .ingredientList ul{
+  max-height: 75px;
+  overflow: hidden;
+  margin: 0;
+
+
+
+ }
