@@ -35,3 +35,19 @@ const ustensilFactory = (uniqueUstensilArray) => {
     ustensilesListContainer.appendChild(li);
   });
 };
+
+
+const activeFilterfct = (cliquedFilter) => {
+  const li = document.createElement("li");
+  const cancelIcone = document.createElement("img");
+  const pFilter = document.createElement("p");
+  pFilter.textContent = cliquedFilter
+  cancelIcone.setAttribute("src", "./assets/pictures/close.svg");
+  cancelIcone.setAttribute("alt", "close filter");
+  li.classList.add("liFilter");
+  li.classList.add("blue");
+  li.appendChild(pFilter)
+  li.appendChild(cancelIcone)
+
+return li
+}
