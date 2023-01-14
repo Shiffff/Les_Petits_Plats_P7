@@ -52,9 +52,8 @@ recipes.forEach((recipe) => {
 const mainSearchListener = () => {
   const mainSearch = document.querySelector(".rounded input");
   mainSearch.addEventListener("input", (e) => {
-    filterRecipes = copyArray(recipes);
     if (mainSearch.value.length > 2) {
-      filterRecipes = sortMedia(filterRecipes, mainSearch.value, "mainSearch");
+      filterRecipes = sortMedia(recipes, mainSearch.value, "mainSearch");
       const recipeContainer = document.querySelector(".recipeContainer");
       recipeContainer.innerText = "";
       filterRecipes.forEach((recipe) => {
@@ -63,11 +62,13 @@ const mainSearchListener = () => {
       sortData(filterRecipes);
     } else {
       recipeContainer.innerText = "";
+      filterRecipes = sortMedia(recipes, mainSearch.value, "mainSearch");
       recipes.forEach((recipe) => {
         recipeFactory(recipe);
       });
-      sortData(recipes);
+      sortData(filterRecipes);
     }
+    console.log(filterRecipes)
   });
 };
 mainSearchListener();
@@ -79,18 +80,13 @@ document.addEventListener("click", function(e) {
   if (e.target.tagName === "LI" && e.target.closest(".filtersOpen.blue ul li")) {
     cliquedFilter = e.target.textContent;
     newIngredientFilter(cliquedFilter)
-
 }
 });
-
 };
 ingredientsListener();
 
-
-
-
 newIngredientFilter = (cliquedFilter) => {
-  filterRecipes = copyArray(recipes);
+  ingredientFilterRecipes = copyArray(filterRecipes);
   const recipeContainer = document.querySelector(".recipeContainer ");
   recipeContainer.innerText = "";
   let found = false;
@@ -107,7 +103,7 @@ newIngredientFilter = (cliquedFilter) => {
       })
       found = true;
       filterActiveArray.forEach((eachFilter) => {
-        filterRecipes = sortMedia(recipes, eachFilter, "ingrediantSearch");
+        ingredientFilterRecipes = sortMedia(recipes, eachFilter, "ingrediantSearch");
       });
     }
   });
@@ -116,20 +112,18 @@ newIngredientFilter = (cliquedFilter) => {
     const activeFilter = document.querySelector(".activeFilter ul")
     const newLi = activeFilterfct(cliquedFilter)
     activeFilter.appendChild(newLi)
-
     filterActiveArray.forEach((eachFilter) => {
-      filterRecipes = sortMedia(
-        filterRecipes,
+      ingredientFilterRecipes = sortMedia(
+        ingredientFilterRecipes,
         eachFilter,
         "ingrediantSearch"
       );
     });
   }
-  filterRecipes.forEach((recipe) => {
+  ingredientFilterRecipes.forEach((recipe) => {
     recipeFactory(recipe);
   });
-  sortData(filterRecipes)
-
+  sortData(ingredientFilterRecipes)
 }
 
 document.addEventListener("click", function(e) {
@@ -140,10 +134,6 @@ document.addEventListener("click", function(e) {
 
 
 //     newIngredientFilter(e.target.parentNode.querySelector("p").textContent)
-
-
-
-
 
 /*
 const appareilsListener = () => {
