@@ -36,18 +36,17 @@ const ustensilFactory = (uniqueUstensilArray) => {
   });
 };
 
-
-const activeFilterfct = (cliquedFilter) => {
+const activeFilterfct = (cliquedFilter, color) => {
   const li = document.createElement("li");
   const cancelIcone = document.createElement("img");
   const pFilter = document.createElement("p");
-  pFilter.textContent = cliquedFilter
+  pFilter.textContent = cliquedFilter;
   cancelIcone.setAttribute("src", "./assets/pictures/close.svg");
   cancelIcone.setAttribute("alt", "close filter");
   li.classList.add("liFilter");
-  li.classList.add("blue");
-  li.appendChild(pFilter)
-  li.appendChild(cancelIcone)
+  li.classList.add(color);
+  li.appendChild(pFilter);
+  li.appendChild(cancelIcone);
 
-return li
-}
+  return li;
+};

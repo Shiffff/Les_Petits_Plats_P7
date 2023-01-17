@@ -29,11 +29,41 @@ class Ingredient {
     let newRecipes = [];
     filterRecipes.forEach((recipe) => {
       if (
-        recipe.name.toLowerCase().includes(value.toLowerCase()) ||
         recipe.ingredients.some((ingredient) =>
           ingredient.ingredient.toLowerCase().includes(value.toLowerCase())
-        ) ||
-        recipe.description.toLowerCase().includes(value.toLowerCase())
+        )
+      ) {
+        newRecipes.push(recipe);
+      }
+    });
+    return newRecipes;
+  }
+}
+class Appareil {
+  static supports(field) {
+    return field === "appareilSearch";
+  }
+  static order(filterRecipes, value) {
+    let newRecipes = [];
+    filterRecipes.forEach((recipe) => {
+      if (recipe.appliance == value) {
+        newRecipes.push(recipe);
+      }
+    });
+    return newRecipes;
+  }
+}
+class Ustensil {
+  static supports(field) {
+    return field === "ustensilSearch";
+  }
+  static order(filterRecipes, value) {
+    let newRecipes = [];
+    filterRecipes.forEach((recipe) => {
+      if (
+        recipe.ustensils.some((ustensil) =>
+          ustensil.toLowerCase().includes(value.toLowerCase())
+        )
       ) {
         newRecipes.push(recipe);
       }
@@ -42,7 +72,7 @@ class Ingredient {
   }
 }
 
-const filters = [Recette, Ingredient];
+const filters = [Recette, Ingredient, Appareil, Ustensil];
 
 const sortMedia = (filterRecipes, value, field) => {
   for (const filter of filters)

@@ -1,5 +1,7 @@
+let ingredientFilterActiveArray = [];
+let appareilsFilterActiveArray = [];
+let ustensilsFilterActiveArray = [];
 let filterActiveArray = [];
-
 
 document.querySelectorAll(".filterContainer button").forEach((button) => {
   button.addEventListener("click", (e) => {
@@ -48,116 +50,240 @@ let filterRecipes = copyArray(recipes);
 recipes.forEach((recipe) => {
   recipeFactory(recipe);
 });
+// FilterSort *************************************************
+
+const sortFilter = () => {
+  recipeContainer.innerText = "";
+  let filterRecipes = copyArray(recipes);
+  filterActiveArray.forEach((filter) => {
+    if (filter.mainSearchValue) {
+      filterRecipes = sortMedia(
+        filterRecipes,
+        filter.mainSearchValue,
+        "mainSearch"
+      );
+    } else if (filter.ingredientsFilters) {
+      filter.ingredientsFilters.forEach((filterOne) => {
+        filterRecipes = sortMedia(filterRecipes, filterOne, "ingrediantSearch");
+      });
+    } else if (filter.appareilsFilters) {
+      filter.appareilsFilters.forEach((filterOne) => {
+        filterRecipes = sortMedia(filterRecipes, filterOne, "appareilSearch");
+      });
+    } else if (filter.ustensilsFilters) {
+      filter.ustensilsFilters.forEach((filterOne) => {
+        filterRecipes = sortMedia(filterRecipes, filterOne, "ustensilSearch");
+      });
+    }
+  });
+  if (filterRecipes[0]) {
+    filterRecipes.forEach((recipe) => {
+      recipeFactory(recipe);
+    });
+    sortData(filterRecipes);
+  } else {
+    recipeContainer.innerText = `Aucune recette ne correspond à votre critère… vous pouvez
+    chercher « tarte aux pommes », « poisson », etc.`;
+  }
+};
+sortFilter();
+
+// MAIN SEARCH *************************************************
 
 const mainSearchListener = () => {
   const mainSearch = document.querySelector(".rounded input");
   mainSearch.addEventListener("input", (e) => {
     if (mainSearch.value.length > 2) {
-      filterRecipes = sortMedia(recipes, mainSearch.value, "mainSearch");
-      const recipeContainer = document.querySelector(".recipeContainer");
-      recipeContainer.innerText = "";
-      filterRecipes.forEach((recipe) => {
-        recipeFactory(recipe);
-      });
-      sortData(filterRecipes);
+      let mainSearchValue = { mainSearchValue: mainSearch.value };
+      let existing = filterActiveArray.find((item) => item.mainSearchValue);
+      if (existing) {
+        existing.mainSearchValue = mainSearchValue.mainSearchValue;
+      } else {
+        filterActiveArray.push(mainSearchValue);
+      }
     } else {
-      recipeContainer.innerText = "";
-      filterRecipes = sortMedia(recipes, mainSearch.value, "mainSearch");
-      recipes.forEach((recipe) => {
-        recipeFactory(recipe);
-      });
-      sortData(filterRecipes);
+      let existing = filterActiveArray.find((item) => item.mainSearchValue);
+      if (existing) {
+        filterActiveArray = filterActiveArray.filter(
+          (item) => item !== existing
+        );
+      }
     }
-    console.log(filterRecipes)
+    sortFilter();
   });
 };
 mainSearchListener();
 
+// INGREDIENTS *************************************************
 
 const ingredientsListener = () => {
-
-document.addEventListener("click", function(e) {
-  if (e.target.tagName === "LI" && e.target.closest(".filtersOpen.blue ul li")) {
-    cliquedFilter = e.target.textContent;
-    newIngredientFilter(cliquedFilter)
-}
-});
+  document.addEventListener("click", function (e) {
+    if (
+      e.target.tagName === "LI" &&
+      e.target.closest(".filtersOpen.blue ul li")
+    ) {
+      cliquedFilter = e.target.textContent;
+      newIngredientFilter(cliquedFilter);
+    }
+  });
 };
 ingredientsListener();
 
 newIngredientFilter = (cliquedFilter) => {
-  ingredientFilterRecipes = copyArray(filterRecipes);
-  const recipeContainer = document.querySelector(".recipeContainer ");
-  recipeContainer.innerText = "";
   let found = false;
-  filterActiveArray.forEach((ingredient) => {
+  ingredientFilterActiveArray.forEach((ingredient) => {
     if (ingredient == cliquedFilter) {
-      filterActiveArray = filterActiveArray.filter(
+      ingredientFilterActiveArray = ingredientFilterActiveArray.filter(
         (ingredient) => ingredient != cliquedFilter
       );
-      const deleteLi = document.querySelectorAll(".activeFilter li")
+      const deleteLi = document.querySelectorAll(".activeFilter li");
       deleteLi.forEach((deleteLiOne) => {
-        if(deleteLiOne.querySelector("p").innerText == ingredient){
-          deleteLiOne.remove()
+        if (deleteLiOne.querySelector("p").innerText == ingredient) {
+          deleteLiOne.remove();
         }
-      })
-      found = true;
-      filterActiveArray.forEach((eachFilter) => {
-        ingredientFilterRecipes = sortMedia(recipes, eachFilter, "ingrediantSearch");
       });
+      found = true;
     }
   });
   if (!found) {
-    filterActiveArray.push(cliquedFilter);
-    const activeFilter = document.querySelector(".activeFilter ul")
-    const newLi = activeFilterfct(cliquedFilter)
-    activeFilter.appendChild(newLi)
-    filterActiveArray.forEach((eachFilter) => {
-      ingredientFilterRecipes = sortMedia(
-        ingredientFilterRecipes,
-        eachFilter,
-        "ingrediantSearch"
-      );
-    });
+    ingredientFilterActiveArray.push(cliquedFilter);
+    const activeFilter = document.querySelector(".activeFilter ul");
+    const newLi = activeFilterfct(cliquedFilter, "blue");
+    activeFilter.appendChild(newLi);
   }
-  ingredientFilterRecipes.forEach((recipe) => {
-    recipeFactory(recipe);
-  });
-  sortData(ingredientFilterRecipes)
-}
-
-document.addEventListener("click", function(e) {
-  if (e.target.tagName === "IMG" && e.target.closest(".activeFilter ul li")) {
-    newIngredientFilter(e.target.parentNode.querySelector("p").textContent)
+  let ingredientsActiveArray = {
+    ingredientsFilters: ingredientFilterActiveArray,
+  };
+  let existing = filterActiveArray.find((item) => item.ingredientsFilters);
+  if (existing) {
+    filterActiveArray = filterActiveArray.filter((item) => item !== existing);
+    filterActiveArray.push(ingredientsActiveArray);
+  } else {
+    filterActiveArray.push(ingredientsActiveArray);
+  }
+  sortFilter();
+};
+document.addEventListener("click", function (e) {
+  if (
+    e.target.tagName === "IMG" &&
+    e.target.closest(".activeFilter ul .liFilter.blue")
+  ) {
+    newIngredientFilter(e.target.parentNode.querySelector("p").textContent);
   }
 });
 
+// APPAREILS *************************************************
 
-//     newIngredientFilter(e.target.parentNode.querySelector("p").textContent)
-
-/*
 const appareilsListener = () => {
-  document.querySelectorAll(".appareilsContainer li").forEach((appareil) => {
-    appareil.addEventListener("click", (e) => {
-      console.log(e.target);
-    });
+  document.addEventListener("click", function (e) {
+    if (
+      e.target.tagName === "LI" &&
+      e.target.closest(".filtersOpen.green ul li")
+    ) {
+      cliquedFilter = e.target.textContent;
+      newAppareilsFilter(cliquedFilter);
+    }
   });
 };
 appareilsListener();
 
-const ustensileListener = () => {
-  document.querySelectorAll(".ustensilesContainer li").forEach((ustensile) => {
-    ustensile.addEventListener("click", (e) => {
-      console.log(e.target);
-    });
+newAppareilsFilter = (cliquedFilter) => {
+  let found = false;
+  appareilsFilterActiveArray.forEach((appareil) => {
+    if (appareil == cliquedFilter) {
+      appareilsFilterActiveArray = appareilsFilterActiveArray.filter(
+        (appareil) => appareil != cliquedFilter
+      );
+      const deleteLi = document.querySelectorAll(".activeFilter li");
+      deleteLi.forEach((deleteLiOne) => {
+        if (deleteLiOne.querySelector("p").innerText == appareil) {
+          deleteLiOne.remove();
+        }
+      });
+      found = true;
+    }
+  });
+  if (!found) {
+    appareilsFilterActiveArray.push(cliquedFilter);
+    const activeFilter = document.querySelector(".activeFilter ul");
+    const newLi = activeFilterfct(cliquedFilter, "green");
+    activeFilter.appendChild(newLi);
+  }
+  let appareilsActiveArray = {
+    appareilsFilters: appareilsFilterActiveArray,
+  };
+  let existing = filterActiveArray.find((item) => item.appareilsFilters);
+  if (existing) {
+    filterActiveArray = filterActiveArray.filter((item) => item !== existing);
+    filterActiveArray.push(appareilsActiveArray);
+  } else {
+    filterActiveArray.push(appareilsActiveArray);
+  }
+  sortFilter();
+};
+document.addEventListener("click", function (e) {
+  if (
+    e.target.tagName === "IMG" &&
+    e.target.closest(".activeFilter ul .liFilter.green")
+  ) {
+    newAppareilsFilter(e.target.parentNode.querySelector("p").textContent);
+  }
+});
+
+// Ustensiles *************************************************
+const ustensilesListener = () => {
+  document.addEventListener("click", function (e) {
+    if (
+      e.target.tagName === "LI" &&
+      e.target.closest(".filtersOpen.red ul li")
+    ) {
+      cliquedFilter = e.target.textContent;
+      newUstensilsFilter(cliquedFilter);
+    }
   });
 };
-ustensileListener();
+ustensilesListener();
 
-/*    ingredient.addEventListener("click", (e) => {
-      newRecipesList = sortMedia(
-        filterRecipes,
-        e.target.textContent,
-        "ingrediantSearch"
+newUstensilsFilter = (cliquedFilter) => {
+  let found = false;
+  ustensilsFilterActiveArray.forEach((ustensils) => {
+    if (ustensils == cliquedFilter) {
+      ustensilsFilterActiveArray = ustensilsFilterActiveArray.filter(
+        (ustensils) => ustensils != cliquedFilter
       );
-    });*/
+      const deleteLi = document.querySelectorAll(".activeFilter li");
+      deleteLi.forEach((deleteLiOne) => {
+        if (deleteLiOne.querySelector("p").innerText == ustensils) {
+          deleteLiOne.remove();
+        }
+      });
+      found = true;
+    }
+  });
+  if (!found) {
+    ustensilsFilterActiveArray.push(cliquedFilter);
+    const activeFilter = document.querySelector(".activeFilter ul");
+    const newLi = activeFilterfct(cliquedFilter, "red");
+    activeFilter.appendChild(newLi);
+  }
+  let ustensilsActiveArray = {
+    ustensilsFilters: ustensilsFilterActiveArray,
+  };
+  let existing = filterActiveArray.find((item) => item.ustensilsFilters);
+  if (existing) {
+    filterActiveArray = filterActiveArray.filter((item) => item !== existing);
+    filterActiveArray.push(ustensilsActiveArray);
+  } else {
+    filterActiveArray.push(ustensilsActiveArray);
+  }
+
+  sortFilter();
+};
+document.addEventListener("click", function (e) {
+  if (
+    e.target.tagName === "IMG" &&
+    e.target.closest(".activeFilter ul .liFilter.red")
+  ) {
+    newUstensilsFilter(e.target.parentNode.querySelector("p").textContent);
+  }
+});
