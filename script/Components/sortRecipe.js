@@ -1,22 +1,20 @@
-let filterArray = [];
-
 class Recette {
   static supports(field) {
     return field === "mainSearch";
   }
   static order(filterRecipes, value) {
     let result = [];
-    filterRecipes.forEach((recipe) => {
+    for (let i = 0; i < filterRecipes.length; i++) {
       if (
-        recipe.name.toLowerCase().includes(value.toLowerCase()) ||
-        recipe.ingredients.some((ingredient) =>
+        filterRecipes[i].name.toLowerCase().includes(value.toLowerCase()) ||
+        filterRecipes[i].ingredients.some((ingredient) =>
           ingredient.ingredient.toLowerCase().includes(value.toLowerCase())
         ) ||
-        recipe.description.toLowerCase().includes(value.toLowerCase())
+        filterRecipes[i].description.toLowerCase().includes(value.toLowerCase())
       ) {
-        result.push(recipe);
+        result.push(filterRecipes[i]);
       }
-    });
+    }
     return result;
   }
 }
@@ -27,15 +25,15 @@ class Ingredient {
   }
   static order(filterRecipes, value) {
     let newRecipes = [];
-    filterRecipes.forEach((recipe) => {
+    for (let i = 0; i < filterRecipes.length; i++) {
       if (
-        recipe.ingredients.some((ingredient) =>
+        filterRecipes[i].ingredients.some((ingredient) =>
           ingredient.ingredient.toLowerCase().includes(value.toLowerCase())
         )
       ) {
-        newRecipes.push(recipe);
+        newRecipes.push(filterRecipes[i]);
       }
-    });
+    }
     return newRecipes;
   }
 }
@@ -45,11 +43,11 @@ class Appareil {
   }
   static order(filterRecipes, value) {
     let newRecipes = [];
-    filterRecipes.forEach((recipe) => {
-      if (recipe.appliance == value) {
-        newRecipes.push(recipe);
+    for (let i = 0; i < filterRecipes.length; i++) {
+      if (filterRecipes[i].appliance == value) {
+        newRecipes.push(filterRecipes[i]);
       }
-    });
+    }
     return newRecipes;
   }
 }
@@ -59,15 +57,15 @@ class Ustensil {
   }
   static order(filterRecipes, value) {
     let newRecipes = [];
-    filterRecipes.forEach((recipe) => {
+    for (let i = 0; i < filterRecipes.length; i++) {
       if (
-        recipe.ustensils.some((ustensil) =>
+        filterRecipes[i].ustensils.some((ustensil) =>
           ustensil.toLowerCase().includes(value.toLowerCase())
         )
       ) {
-        newRecipes.push(recipe);
+        newRecipes.push(filterRecipes[i]);
       }
-    });
+    }
     return newRecipes;
   }
 }
