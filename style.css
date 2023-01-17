@@ -354,12 +354,15 @@ header{
  .descriptionCard p{
   max-height: 75px;
   max-width: 90%;
-  overflow: hidden;
   font-size: 9px;
   line-height: 1.4;
-  text-overflow: ellipsis;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6; /* start showing ellipsis when 3rd line is reached */
+  white-space: pre-wrap; /* let the text wrap preserving spaces */
 
   
  }
