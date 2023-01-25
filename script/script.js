@@ -1,7 +1,22 @@
 let ingredientFilterActiveArray = [];
 let appareilsFilterActiveArray = [];
 let ustensilsFilterActiveArray = [];
-let filterActiveArray = [];
+// let filterActiveArray = [];
+
+let filterActiveArray = [
+  {
+    ingredientsFilters: ["Lait de coco"],
+  },
+  {
+    appareilsFilters: ["Blender"],
+  },
+  {
+    ustensilsFilters: ["cuillère à Soupe"],
+  },
+  {
+    mainSearchValue: "lait",
+  },
+];
 
 document.querySelectorAll(".filterContainer button").forEach((button) => {
   button.addEventListener("click", (e) => {
@@ -287,3 +302,20 @@ document.addEventListener("click", function (e) {
     newUstensilsFilter(e.target.parentNode.querySelector("p").textContent);
   }
 });
+
+const testfc = () => {
+  let compteur = 200000;
+  let i = 0;
+  let start = performance.now();
+  while (i < compteur) {
+    sortFilter();
+    i++;
+  }
+  let end = performance.now();
+  let duration = (end - start) / 1000;
+  console.log("la fonction a pris" + duration + " secondes pour s'éxécuter");
+  duration = duration / compteur;
+  console.log("(" + duration + " secondes pour 1 éléments");
+};
+
+testfc();
