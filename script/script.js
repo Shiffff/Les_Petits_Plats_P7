@@ -304,7 +304,7 @@ document.addEventListener("click", function (e) {
 });
 
 const testfc = () => {
-  let compteur = 1000000;
+  let compteur = 200000;
   let i = 0;
   let start = performance.now();
   while (i < compteur) {
@@ -317,3 +317,5 @@ const testfc = () => {
   duration = duration / compteur;
   console.log("(" + duration + " secondes pour 1 éléments");
 };
+
+testfc();
