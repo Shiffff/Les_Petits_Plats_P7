@@ -1,7 +1,22 @@
 let ingredientFilterActiveArray = [];
 let appareilsFilterActiveArray = [];
 let ustensilsFilterActiveArray = [];
-let filterActiveArray = [];
+// let filterActiveArray = [];
+
+let filterActiveArray = [
+  {
+    ingredientsFilters: ["Lait de coco"],
+  },
+  {
+    appareilsFilters: ["Blender"],
+  },
+  {
+    ustensilsFilters: ["cuillère à Soupe"],
+  },
+  {
+    mainSearchValue: "lait",
+  },
+];
 
 document.querySelectorAll(".filterContainer button").forEach((button) => {
   button.addEventListener("click", (e) => {
@@ -289,7 +304,7 @@ document.addEventListener("click", function (e) {
 });
 
 const testfc = () => {
-  let compteur = 100000;
+  let compteur = 1000000;
   let i = 0;
   let start = performance.now();
   while (i < compteur) {
@@ -299,6 +314,6 @@ const testfc = () => {
   let end = performance.now();
   let duration = (end - start) / 1000;
   console.log("la fonction a pris" + duration + " secondes pour s'éxécuter");
-  duration = duration / 100000;
+  duration = duration / compteur;
   console.log("(" + duration + " secondes pour 1 éléments");
 };
