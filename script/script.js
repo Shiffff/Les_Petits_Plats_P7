@@ -1,9 +1,9 @@
 let ingredientFilterActiveArray = [];
 let appareilsFilterActiveArray = [];
 let ustensilsFilterActiveArray = [];
-// let filterActiveArray = [];
+ let filterActiveArray = [];
 
-let filterActiveArray = [
+/*let filterActiveArray = [
   {
     ingredientsFilters: ["Lait de coco"],
   },
@@ -17,7 +17,7 @@ let filterActiveArray = [
     mainSearchValue: "lait",
   },
 ];
-
+*/
 document.querySelectorAll(".filterContainer button").forEach((button) => {
   button.addEventListener("click", (e) => {
     e.preventDefault();
@@ -318,4 +318,4 @@ const testfc = () => {
   console.log("(" + duration + " secondes pour 1 éléments");
 };
 
-testfc();
+// testfc();
